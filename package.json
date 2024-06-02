@@ -12,11 +12,14 @@
     "dev": "nodemon",
     "watch-ts": "tsc -w",
     "migration:generate": "typeorm migration:create -n",
+    "migration:auto": "ts-node ./node_modules/typeorm/cli.js migration:generate -n",
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
     "migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.0"
+    "@types/bcrypt": "^5.0.0",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.6"
   },
   "dependencies": {
     "@babel/core": "^7.12.10",
@@ -56,6 +59,8 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "supertest": "^6.0.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "ts-jest": "^26.4.4",
     "ts-node": "^9.1.1",
     "tslint": "^6.1.3",

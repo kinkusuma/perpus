@@ -1,5 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { BaseEntity } from '../base/base.entity';
+import { Borrow } from '../borrow/borrow.entity';
 
 @Entity('book', { orderBy: { id: 'DESC' } })
 export class Book extends BaseEntity {
@@ -27,4 +33,7 @@ export class Book extends BaseEntity {
     onUpdate: 'CURRENT_TIMESTAMP',
   })
   updatedAt: Date;
+
+  @OneToMany(() => Borrow, (borrow) => borrow.book)
+  borrows: Borrow[];
 }

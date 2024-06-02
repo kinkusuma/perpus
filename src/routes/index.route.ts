@@ -6,6 +6,7 @@ import meRouter from './me/me.route';
 import userRouter from './user/user.route';
 import memberRouter from './member/member.route';
 import bookRouter from './book/book.route';
+import borrowRouter from './borrow/borrow.route';
 
 const router = express.Router();
 
@@ -15,5 +16,6 @@ router.use('/me', meRouter);
 router.use('/user', userRouter);
 router.use('/member', memberRouter);
 router.use('/book', bookRouter);
+router.use('/borrow', borrowRouter);
 
 export default router;

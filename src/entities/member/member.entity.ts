@@ -2,11 +2,13 @@ import {
   Column,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { BaseEntity } from '../base/base.entity';
 import { User } from '../user/user.entity';
+import { Borrow } from '../borrow/borrow.entity';
 
 export enum EMemberStatus {
   ACTIVE = 'active',
@@ -44,6 +46,9 @@ export class Member extends BaseEntity {
   @OneToOne(() => User)
   @JoinColumn()
   user: User;
+
+  @OneToMany(() => Borrow, (borrow) => borrow.member)
+  borrows: Borrow[];
 
   toJSON() {
     return this;
