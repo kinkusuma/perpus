@@ -10,4 +10,10 @@ export default {
         .required(),
     },
   },
+
+  penaltizeMember: {
+    body: {
+      code: joi.string().required(),
+    },
+  },
 };

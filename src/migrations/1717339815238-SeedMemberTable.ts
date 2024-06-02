@@ -3,11 +3,11 @@ import {
   QueryRunner,
   getRepository,
 } from 'typeorm';
-import { Member } from '../entities/member/member.entity';
 import { User } from '../entities/user/user.entity';
+import { Member } from '../entities/member/member.entity';
 import { memberUsers } from '../seeds/member.seed';
 
-export class SeedMemberTable1717332874128
+export class SeedMemberTable1717339815238
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     memberUsers.forEach(async (member) => {

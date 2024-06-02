@@ -22,4 +22,11 @@ router.put(
   memberController.update,
 );
 
+router.post(
+  '/penaltize',
+  isAdmin(),
+  schemaValidator(memberSchema.penaltizeMember),
+  memberController.penaltize,
+);
+
 export default router;

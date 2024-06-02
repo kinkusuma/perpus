@@ -2,13 +2,19 @@ import { getRepository } from 'typeorm';
 
 // Entities
 import { User } from '../../entities/user/user.entity';
-import { Member } from '../../entities/member/member.entity';
+import {
+  Member,
+  EMemberStatus,
+} from '../../entities/member/member.entity';
 
 // Utilities
 import ApiUtility from '../../utilities/api.utility';
 
 // Interfaces
-import { IUpdateStatusMember } from 'member.interface';
+import {
+  IPenaltizeMember,
+  IUpdateStatusMember,
+} from 'member.interface';
 
 // Errors
 import { StringError } from '../../errors/string.error';
@@ -24,16 +30,10 @@ const create = async (user: User) => {
   item.code = 'XXXXX';
   const memberData = await getRepository(Member).save(item);
 
-  item.code = `M${memberData.id.toString().padStart(3, '0')}`;
-  await getRepository(Member).update(
-    { id: memberData.id },
-    { code: item.code },
-  );
+  memberData.code = `M${memberData.id.toString().padStart(3, '0')}`;
+  await getRepository(Member).update({ id: memberData.id }, memberData);
 
-  return ApiUtility.sanitizeData({
-    ...memberData,
-    code: item.code,
-  } as Member);
+  return ApiUtility.sanitizeData(memberData);
 };
 
 const getByUserId = async (user: User) => {
@@ -51,14 +51,32 @@ const update = async (user: User, params: IUpdateStatusMember) => {
     throw new StringError('Member is not existed');
   }
 
-  return await getRepository(Member).update(
+  await getRepository(Member).update(
     { user: user },
     { status: params.status },
   );
+
+  return ApiUtility.sanitizeData(member);
+};
+
+const penaltize = async (params: IPenaltizeMember) => {
+  const member = await getRepository(Member).findOne({
+    code: params.code,
+  });
+  if (!member) {
+    throw new StringError('Member is not existed');
+  }
+
+  member.status = EMemberStatus.PENALTIZED;
+  member.penaltizedAt = new Date();
+  await getRepository(Member).update({ code: params.code }, member);
+
+  return ApiUtility.sanitizeData(member);
 };
 
 export default {
   create,
   getByUserId,
   update,
+  penaltize,
 };

@@ -10,8 +10,7 @@ import { User } from '../user/user.entity';
 
 export enum EMemberStatus {
   ACTIVE = 'active',
-  INACTIVE = 'inactive',
-  ONBORROW = 'onborrow',
+  PENALTIZED = 'penaltized',
 }
 
 @Entity('member', { orderBy: { id: 'DESC' } })
@@ -28,6 +27,19 @@ export class Member extends BaseEntity {
     default: EMemberStatus.ACTIVE,
   })
   status: EMemberStatus;
+
+  @Column({ type: 'timestamp' })
+  penaltizedAt: Date;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
+  updatedAt: Date;
 
   @OneToOne(() => User)
   @JoinColumn()
