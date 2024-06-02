@@ -29,4 +29,6 @@ router.post(
   memberController.penaltize,
 );
 
+router.get('/all', isAdmin(), memberController.list);
+
 export default router;

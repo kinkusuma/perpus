@@ -2,6 +2,7 @@ import { getRepository } from 'typeorm';
 
 // Entities
 import { User } from '../../entities/user/user.entity';
+import { Borrow } from '../../entities/borrow/borrow.entity';
 import {
   Member,
   EMemberStatus,
@@ -74,9 +75,21 @@ const penaltize = async (params: IPenaltizeMember) => {
   return ApiUtility.sanitizeData(member);
 };
 
+const list = async () => {
+  const data = await getRepository(Member)
+    .createQueryBuilder('member')
+    .leftJoinAndSelect('member.user', 'user')
+    .leftJoinAndSelect('member.borrows', 'borrows')
+    .leftJoinAndSelect('borrows.book', 'book')
+    .getMany();
+
+  return data.map((item) => ApiUtility.sanitizeData(item));
+};
+
 export default {
   create,
   getByUserId,
   update,
   penaltize,
+  list,
 };

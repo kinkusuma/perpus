@@ -78,9 +78,19 @@ const penaltize: IController = async (req, res) => {
   }
 };
 
+const list: IController = async (req, res) => {
+  try {
+    const members = await memberService.list();
+    return ApiResponse.result(res, members, httpStatusCodes.OK);
+  } catch (e) {
+    return ApiResponse.error(res, httpStatusCodes.BAD_REQUEST);
+  }
+};
+
 export default {
   create,
   getByUserId,
   update,
   penaltize,
+  list,
 };
