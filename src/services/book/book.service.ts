@@ -1,4 +1,4 @@
-import { getRepository } from 'typeorm';
+import { getRepository, MoreThan } from 'typeorm';
 
 // Entities
 import { Book } from '../../entities/book/book.entity';
@@ -28,7 +28,9 @@ const add = async (params: IAddBook) => {
 };
 
 const getAll = async () => {
-  const books = await getRepository(Book).find();
+  const books = await getRepository(Book).find({
+    where: { stock: MoreThan(0) },
+  });
   return books.map((book) => ApiUtility.sanitizeData(book));
 };
 
