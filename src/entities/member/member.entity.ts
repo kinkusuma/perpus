@@ -28,7 +28,7 @@ export class Member extends BaseEntity {
   })
   status: EMemberStatus;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamp', nullable: true })
   penaltizedAt: Date;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
