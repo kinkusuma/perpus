@@ -61,4 +61,22 @@ export const userSeed = [
     firstName: 'Josephine',
     lastName: 'Mann',
   },
+  {
+    email: 'angga@mail.com',
+    password: bcrypt.hashSync('password', 10),
+    firstName: 'Angga',
+    lastName: '',
+  },
+  {
+    email: 'ferry@mail.com',
+    password: bcrypt.hashSync('password', 10),
+    firstName: 'Ferry',
+    lastName: '',
+  },
+  {
+    email: 'putri@mail.com',
+    password: bcrypt.hashSync('password', 10),
+    firstName: 'Putri',
+    lastName: '',
+  },
 ];
